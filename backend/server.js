@@ -3,6 +3,7 @@ let express = require('express');
 let app = express();
 let configure = require('./server/configure');
 let mongoose = require('mongoose');
+const path = require('path')
 
 
 
@@ -35,18 +36,15 @@ mongoose.connection.once('open', function(){
 
 
 
-app.use(function(req, res){
-    res.send('Error: page not found');
-    console.log('Error : page not found');
-})
- (process.env.NODE_ENV === 'production') {
+
+ 
     const appPath = path.join(__dirname, '..', 'dist');
     app.use(express.static(appPath));
   
     app.get('*', function(req, res) {
       res.sendFile(path.resolve(appPath, 'index.html'));
     });
-}
+
 
 
  let server = app.listen(app.get('port') , function(){
