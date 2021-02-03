@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
       proxy: {
         "^/api": {
-          target: "http://localhost:8045",
+          target: "https://referalgame.herokuapp.com",
           ws:true,
           secure:false
         },

@@ -25,8 +25,8 @@ router.get('/referal', authUser, async (req, res) => {
     .then(loggedUser => {
       //Generate random referral link
       
-      // const generatedRefLink = `${req.protocol}://${req.headers.host}/register?reflink=${loggedUser.referralLink}`
-      const generatedRefLink = `${req.protocol}://localhost:8081/register?reflink=${loggedUser.referralLink}`
+      const generatedRefLink = `${req.protocol}://${req.headers.host}/register?reflink=${loggedUser.referralLink}`
+      // const generatedRefLink = `${req.protocol}://localhost:8081/register?reflink=${loggedUser.referralLink}`
       console.log(generatedRefLink)
       res.send({
         loggedUser: loggedUser,
