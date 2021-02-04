@@ -26,7 +26,7 @@ const path = require('path')
 // var  MONGODB_URI = "mongodb+srv://uchechidi:Easytech@cluster0shoppingcart-kcinc.mongodb.net/cluster0shoppingcart?retryWrites=true&w=majority";
 var MONGODB_URI = "mongodb://uchechidi:Easytech@cluster0shoppingcart-shard-00-00-kcinc.mongodb.net:27017,cluster0shoppingcart-shard-00-01-kcinc.mongodb.net:27017,cluster0shoppingcart-shard-00-02-kcinc.mongodb.net:27017/shopping?ssl=true&replicaSet=Cluster0shoppingcart-shard-0&authSource=admin&retryWrites=true&w=majority"
 // const DB = process.env.MONGODB_URI1
-mongoose.connect(MONGODB_URI ,{useNewUrlParser:true,useUnifiedTopology:true});
+mongoose.connect("mongodb://localhost:27017/tasks",{useNewUrlParser:true,useUnifiedTopology:true});
 mongoose.connection.on('error', console.error.bind(console, 'Database connection Error')); /// handling the error
 mongoose.connection.once('open', function(){
     console.log('connected to Database');

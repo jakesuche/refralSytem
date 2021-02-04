@@ -36,5 +36,21 @@ router.get('/referal', authUser, async (req, res) => {
 } )
 
 
+router.post('/updateMessage',function(req,res){
+  const email = req.query.user
+  User.updateOne({email:email},{message:'You were among the luck winner'})
+})
+
+
+router.get('/admim', async function(req,res){
+  User.find().sort({totalpoint:-1}).limit(10).exec(function(err,users){
+    if(err){
+      return res.status(422).send({error:'An eror occurs'})
+    }
+    res.status(200).send({users})
+      
+  })
+})
+
 
 module.exports = router

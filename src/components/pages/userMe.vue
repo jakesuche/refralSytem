@@ -27,31 +27,47 @@
         <div class="bg-light p-4 d-flex justify-content-end text-center">
           <ul class="list-inline mb-0">
             <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">{{userData.downliners.length}}</h5>
+              <h5 class="font-weight-bold mb-0 d-block">
+                {{ userData.downliners.length }}
+              </h5>
               <small class="text-muted">
                 <i class="fas fa-image mr-1"></i>Downliners</small
               >
             </li>
             <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">{{userData.totalpoints}}</h5>
+              <h5 class="font-weight-bold mb-0 d-block">
+                {{ userData.totalpoints }}
+              </h5>
               <small class="text-muted">
                 <i class="fas fa-user mr-1"></i>Points</small
               >
             </li>
-          
           </ul>
         </div>
         <div class="px-4 py-3">
+          <h5 v-if="updateCountdown() == 0" class="mb-0">The game has ended</h5>
+          <h5 v-else class="mb-0">
+            this game will end in {{ updateCountdown() }} days
+          </h5>
+          <div class="p-4 rounded shadow-sm bg-light">
+            <div id="year" class="year"></div>
+
+            <div id="countdown" class="countdown">
+              <div class="time">
+                <h2 ref="day" id="days">{{ updateCountdown() }}</h2>
+                <small>days remaining</small>
+              </div>
+            </div>
+          </div>
           <h5 class="mb-0">About the game</h5>
           <div class="p-4 rounded shadow-sm bg-light">
-            <p class="font-italic mb-0">For each member that registers with your link guarantees 10 points  and your have 100 points to make it. Good luck</p>
-            <p class="font-italic mb-0">Share your referal link to friend and family</p>
-            <p class="font-italic mb-0">Photographer</p>
-          </div>
-          <h5 class="mb-0">Your downliners</h5>
-          <div class="p-4 rounded shadow-sm bg-light">
-            <p class="font-italic mb-0">For each member that registers with your link guarantees 10 points  and your have 100 points to make it. Good luck</p>
-            <p class="font-italic mb-0">Share your referal link to friend and family</p>
+            <p class="font-italic mb-0">
+              For each member that registers with your link guarantees 10 points
+              and your have 100 points to make it. Good luck
+            </p>
+            <p class="font-italic mb-0">
+              Share your referal link to friend and family
+            </p>
             <p class="font-italic mb-0">Photographer</p>
           </div>
         </div>
@@ -79,14 +95,25 @@
 </template>
 
 <script>
+
+const currentYear = new Date().getFullYear();
+
+const newYearTime = new Date(`february 7 ${currentYear}  00:00:00`);
+import axios from 'axios'
 export default {
   data() {
     return {
       isOpen: false,
+      ho: "",
     };
   },
+
   created() {
+    
     this.$store.dispatch("getReferral");
+    if(this.userData.totalpoints >= 100){
+      this.updateMessage()
+    }
   },
   methods: {
     referral() {
@@ -95,6 +122,20 @@ export default {
         : "";
       return link || "";
     },
+    updateCountdown() {
+      const currentTime = new Date(2021, 1, 4);
+      const diff = newYearTime - currentTime;
+
+      const d = Math.floor(diff / 1000 / 60 / 60 / 24);
+
+      return d;
+    },
+
+    updateMessage(){
+      return axios.post(`/api/v1/updateMessage?user=${this.userData['email']}`)
+
+
+    }
   },
   computed: {
     user() {
@@ -103,9 +144,9 @@ export default {
         : "";
       return user;
     },
-    userData(){
-        return this.$store.getters["authUser"]
-    }
+    userData() {
+      return this.$store.getters["authUser"];
+    },
   },
 };
 </script>
@@ -125,5 +166,38 @@ body {
   background: #654ea3;
   background: linear-gradient(to right, #e96443, #904e95);
   min-height: 100vh;
+}
+
+h1 {
+  margin: -80px 0 40px;
+}
+.countdown {
+  display: flex;
+  transform: scale(1);
+}
+.time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
+}
+.time h2 {
+  margin: 0 0 5px;
+}
+@media (max-width: 500px) {
+  h1 {
+    font-size: 45px;
+  }
+  .time {
+    margin: 5px;
+  }
+  .time h2 {
+    font-size: 12px;
+    margin: 0;
+  }
+  .time small {
+    font-size: 10px;
+  }
 }
 </style>

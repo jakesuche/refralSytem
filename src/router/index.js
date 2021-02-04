@@ -3,6 +3,7 @@ import Vue from 'vue'
 import login from "@/components/pages/login";
 import register from "@/components/pages/register";
 import profile from "@/components/pages/userMe";
+import listAllwinners from "@/components/pages/listAllwinners"
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ var router = new Router({
             path:'/me',
             name:'profile',
             component:profile
+        },
+        {
+            path:'listAllwinners',
+            name:'listAllwinners',
+            component:listAllwinners
         }
     
     ],

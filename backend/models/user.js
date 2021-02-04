@@ -45,6 +45,9 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
+  message:{
+    type:String
+  }
 });
 UserSchema.methods.comparePassword = function(guessPassword) {
   return bcrypt.compareSync(guessPassword, this.password);

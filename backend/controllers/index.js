@@ -19,7 +19,7 @@ module.exports = {
           })
           
          return  res.send({message:"You were referred by " + referral.userId.firstname})
-          //Sends  a flash message of the referrer
+          
          
         } else {
           res.send("No referal")
